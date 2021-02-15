@@ -1,0 +1,22 @@
+.item__container {
+	padding: 10px 20px;
+	border-bottom: 1px #c1c1c1 solid;
+	display: flex;
+	flex-direction: row;
+	transition: .8s;
+	cursor: pointer;
+}
+
+.item__container:hover {
+	background: #F5F5F5;
+}
+
+.item__container h2 {
+	font-size: 18px;
+	font-family: 'Helvetica Neue'
+}
+
+.item__container span {
+	font-size: 12px;
+	font-family: 'Helvetica Neue'
+}

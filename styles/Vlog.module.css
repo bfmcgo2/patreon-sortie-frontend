@@ -1,0 +1,25 @@
+.VlogUpload {
+	display: flex;
+	flex-direction: row;
+}
+
+.vlog__map {
+	flex-grow: 2;
+	height: 100vh;
+}
+
+.vlog__builder {
+	flex-grow: 2;
+}
+
+.add__vlog {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+
+.location__search {
+	width: 400px;
+}
