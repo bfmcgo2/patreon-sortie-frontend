@@ -1,13 +1,17 @@
 import '../styles/globals.css';
-import { UploadProvider } from '../context/UploadContext';
+import { VideoProvider } from '../context/VideoContext';
 import { MapProvider } from '../context/MapContext';
+import { GlobalProvider } from '../context/GlobalContext';
 
 function MyApp({ Component, pageProps }) {
   return (
-  		<MapProvider>
-  			<Component {...pageProps} />
-  		</MapProvider>
-  		
+  		<VideoProvider>
+  			<MapProvider>
+  				<GlobalProvider>
+  					<Component {...pageProps} />
+  				</GlobalProvider>
+  			</MapProvider>
+  		</VideoProvider>
   )
 }
 

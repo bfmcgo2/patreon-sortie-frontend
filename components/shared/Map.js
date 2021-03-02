@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import ReactMapboxGl, { Layer, Feature } from 'react-mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 
@@ -14,12 +14,22 @@ const Map = ReactMapboxGl({
 const MapComponent = (props) => {
 	const { mapControls } = useContext(MapContext);
 
+	const [map_center, setMapCenter] = useState(null)
+
 	return(
 		<div className={styles.map_container}>
 			<Map
 			  style="mapbox://styles/mapbox/streets-v9"
 			  className={styles.map}
-			  onStyleLoad={(map)=> mapControls(map)}
+			  center={props.center ? props.center : [-96.85905171135028,39.75522481252764]}
+			  zoom = {props.zoom ? props.zoom : [5]}
+			  onStyleLoad={map=> {
+			  	mapControls(map)
+			  }}
+			  containerStyle={{
+			      height: '100%',
+			      width: '100%'
+			    }}
 			>
 			 {props.children}
 			</Map>

@@ -1,0 +1,65 @@
+{
+  "url": "https://www.youtube.com/watch?v=aaWHRUIwV0s",
+  "locations": [
+    {
+      "id": "poi.1262720399954",
+      "name": "The Biltmore Estate",
+      "coordinates": [
+        -82.55221975,
+        35.540648624999996
+      ],
+      "timestamp": 4.094393,
+      "additional_info": "Beautiful view"
+    },
+    {
+      "id": "poi.68719581267",
+      "name": "Early Girl Eatery",
+      "coordinates": [
+        -82.55473,
+        35.594685
+      ],
+      "timestamp": 102.436871,
+      "additional_info": "Long wait"
+    },
+    {
+      "id": "poi.1211180799664",
+      "name": "Double D's Coffee & Desserts",
+      "coordinates": [
+        -82.551365,
+        35.593223
+      ],
+      "timestamp": 129.03874140180892,
+      "additional_info": "Cute dessert place; double decker bus"
+    },
+    {
+      "id": "poi.1262720399954",
+      "name": "The Biltmore Estate",
+      "coordinates": [
+        -82.55221975,
+        35.540648624999996
+      ],
+      "timestamp": 189.353944,
+      "additional_info": null
+    },
+    {
+      "id": "poi.369367278187",
+      "name": "Biltmore Estate Winery",
+      "coordinates": [
+        -82.581201,
+        35.554951
+      ],
+      "timestamp": 517.92995,
+      "additional_info": "lovely"
+    },
+    {
+      "id": "poi.489626320107",
+      "name": "Pizza Mind",
+      "coordinates": [
+        -82.575084,
+        35.578099
+      ],
+      "timestamp": 623.729183,
+      "additional_info": "great pizza"
+    }
+  ]
+}

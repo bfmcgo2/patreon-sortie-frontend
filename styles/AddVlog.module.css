@@ -1,0 +1,105 @@
+.VlogUpload {
+	display: flex;
+	flex-direction: row;
+}
+
+.vlog__map {
+	flex-grow: 3;
+	height: 100vh;
+}
+
+.vlog__builder {
+	flex-grow: 2;
+	background: rgb(236,234,238);
+	max-width: 450px;
+	height: 100vh;
+}
+
+.add__vlog {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40vh;
+	background-color: rgb(19,24,58);
+}
+
+
+
+.add__vlog form {
+	width: 80%;
+}
+
+.input__container {
+	padding: 0 10px;
+}
+
+.location__search {
+	width: 100%;
+	margin: 10px auto;
+	overflow-y: scroll;
+}
+
+.location__search_results {
+	overflow-y: scroll;
+	height: 50vh;
+}
+
+.add {
+	align-self: center;
+}
+
+.vlog__map__addlocation {
+	position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: 50%;
+    height: 300px;
+    background-color: rgb(236,234,238);
+}
+
+
+.vlog__map__addlocation h2,
+.vlog__map__addlocation p {
+	color: #000;
+	font-weight: 400;
+	margin: 0;
+}
+
+.vlog__map__addlocation h2 {
+	font-size: 26px;
+}
+
+.vlog__map__addlocation p {
+	font-size: 18px;
+}
+
+.vlog__map__slider {
+	position: absolute;
+	width: 100%;
+	overflow-x: scroll;
+	bottom: 30px;
+	z-index: 2;
+	padding: 10px;
+}
+
+.vlog__map__slider::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.vlog__map__slider {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.edit__location {
+	display: flex;
+	flex-direction: row;
+}
+
+.button__container {
+	width: 50%;
+    padding: 0 12px;
+}

@@ -1,0 +1,62 @@
+.vlog__container {
+	position: absolute;
+    top: 50%;
+    left: 5%;
+    transform: translate(0%,-50%);
+    width: 30%;
+    max-width: 600px;
+    min-width: 420px;
+    background-color: rgb(236,234,238);
+    display: flex;
+    flex-direction: column;
+    z-index: 4;
+    transition: .2s;
+}
+
+
+.vlog__locations {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 1px 0;
+    height: 45px;
+	background: white;
+    color: black;
+	cursor: pointer;
+    transition: .2s;
+}
+
+.active {
+    background: #819aba;
+    color: white;
+}
+
+.vlog__locations p {
+    margin: 0 auto;
+}
+
+.vlog__locations a {
+    width: 0px;
+    height: 100%;
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: .2s;
+    background: rgb(0,128,0);
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.vlog__locations a:hover {
+    background: rgb(0,198,0);
+}
+
+.vlog__locations.active a {
+    display: flex;
+    width: 100px;
+    opacity: 1;
+    pointer-events: all;
+}

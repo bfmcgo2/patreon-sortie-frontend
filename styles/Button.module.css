@@ -1,0 +1,25 @@
+.button {
+	background-color: rgba(255, 255, 255, 1);
+	border-radius: 20px;
+	color: #000;
+	box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.0);
+	border: 1px solid rgb(169,169,169);
+	font-size: 18px;
+	padding: 10px 0px;
+	width: 100%;
+	outline: none;
+	cursor: pointer;
+	transition: .1s;
+}
+
+.button:hover {
+	background-color: rgba(255, 255, 255, 0.45);
+	border: 1px solid black;
+	box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+}
+
+.button:active {
+	background-color: rgba(129,154,186, 1);
+	color: #fff;
+	box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
+}

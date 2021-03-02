@@ -1,0 +1,35 @@
+
+.slider_container::-webkit-scrollbar {
+  display: none;
+
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.slider_container {
+	display: inline-flex;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+}
+
+.slider {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background: white;
+	height: 75px;
+	width: 200px;
+	padding: 0 10px;
+	margin: 0 10px;
+	cursor: pointer;
+}
+
+.slider__content {
+	width: 90%;
+	overflow: hidden;
+}
+
+.slider__content h2{
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+

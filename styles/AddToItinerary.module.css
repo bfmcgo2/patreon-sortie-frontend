@@ -1,0 +1,24 @@
+.addtoitinerary__container {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 30%;
+	transform: translate(-50%,-50%);
+	background-color: rgb(236,234,238);
+	z-index: 9999;
+}
+
+.addtoitinerary__container h2,
+.addtoitinerary__container p {
+	color: #000;
+	font-weight: 400;
+	margin: 0;
+}
+
+.addtoitinerary__container h2 {
+	font-size: 26px;
+}
+
+.addtoitinerary__container p {
+	font-size: 18px;
+}

@@ -1,0 +1,17 @@
+.player_container {
+	/* Player ratio: 100 / (1280 / 720) */
+	position: relative;
+	padding-top: 56.25%;  
+}
+
+.react_player {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.react_player > div {
+	position: absolute;
+}
