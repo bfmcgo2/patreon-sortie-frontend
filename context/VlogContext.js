@@ -12,12 +12,13 @@ export const VlogProvider = (props) => {
 
 	const [active_pin, setActivePin] = useState(null);
 	const [map_center, setMapCenter] = useState(null);
+	const [itin_pop, openItinPop] = useState(false);
 
 	const prevActivePin = usePrevious(active_pin);
 
 	useEffect(()=> {
 		if(active_pin) {
-			if(!prevActivePin || prevActivePin.id !== active_pin.id) {
+			if(!prevActivePin || prevActivePin.order !== active_pin.order) {
 				jumpTo(active_pin)
 			}
 		}
@@ -35,8 +36,14 @@ export const VlogProvider = (props) => {
 		setPlaying(true);
 	}
 
+	const openItin = (open) => {
+		setPlaying(false);
+		openItinPop(open);
+		
+	}
+
 	return (
-		<VlogContext.Provider value={{ active_pin,setActivePin, map, map_center, setMapCenter, clickLocation, video_time }}>
+		<VlogContext.Provider value={{ itin_pop, active_pin,setActivePin, map, map_center, setMapCenter, clickLocation, video_time, openItin }}>
 			{props.children}
 		</VlogContext.Provider>
 	)

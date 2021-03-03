@@ -1,0 +1,23 @@
+{
+  "uid": "1234",
+  "buckets": [
+    {
+      "id": "0",
+      "name": "Asheville Trip",
+      "value": "ashville_trip",
+      "locations": []
+    },
+    {
+      "id": "1",
+      "name": "Southeast Road Trip",
+      "value": "southeast_road_trip",
+      "locations": []
+    },
+    {
+      "id": "2",
+     "name": "Iceland",
+     "value": "iceland",
+      "locations": []
+    }
+  ]
+}

@@ -3,6 +3,7 @@
 	left: 50%;
 	top: 50%;
 	width: 30%;
+	height: 35%;
 	transform: translate(-50%,-50%);
 	background-color: rgb(236,234,238);
 	z-index: 9999;
@@ -22,3 +23,10 @@
 .addtoitinerary__container p {
 	font-size: 18px;
 }
+
+.addtoitinerary__container select {
+	padding: 10px 8px;
+    margin: 15px 0;
+}
+
+

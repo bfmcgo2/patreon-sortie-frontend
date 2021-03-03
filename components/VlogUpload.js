@@ -144,7 +144,8 @@ const VlogUpload = () => {
 						<Input 
 							action ={throttledGeocoder} 
 							locked={!data.url ? true : false} 
-							active={false} light={false} 
+							active={false} 
+							light={true} 
 							label={'Add Location To Vlog'}
 							type={'text'}
 							clear={clear}/>

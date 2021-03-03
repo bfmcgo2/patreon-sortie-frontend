@@ -16,20 +16,44 @@
 
 .vlog__locations {
 	display: flex;
-	align-items: center;
+    flex-direction: column;
+    position: relative;
 	justify-content: center;
 	margin: 1px 0;
-    height: 45px;
 	background: white;
     color: black;
 	cursor: pointer;
     transition: .2s;
+    overflow: hidden;
 }
 
 .active {
     background: #819aba;
     color: white;
 }
+
+.vlog__locations__button {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 45px;
+    align-items: center;
+}
+
+.vlog__locations__info {
+    height: 0;
+    opacity: 0;
+    display: flex; 
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(29, 114, 156);
+}
+
+.vlog__locations.active .vlog__locations__info {
+    height: auto;
+    opacity: 1;
+}
+
 
 .vlog__locations p {
     margin: 0 auto;
