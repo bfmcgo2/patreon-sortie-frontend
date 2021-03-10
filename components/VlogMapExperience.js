@@ -39,7 +39,7 @@ const VlogMapExperience = ({data, itin}) => {
 		const timestamps = data.locations.map(loc => loc.timestamp);
 		data.locations.map((loc, i) => {
 			if(video_time > loc.timestamp && video_time < timestamps[i+1]) {
-				let order = {...loc, order: i}
+				let order = {...loc, order: i, url: data.url}
 				setActivePin(order);
 			}
 		})
@@ -72,13 +72,14 @@ const VlogMapExperience = ({data, itin}) => {
 						add_action = { openItin }/>
 
 					<AddToItinerary location ={active_pin} itin={itin}/>
+
 					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'harbor-15' }}>
 					{ removeActiveLocations().map((loc,i)=> {
 					  		return(
 					  			    <Feature 
 						  			    key = { i }
 					  			    	coordinates={loc.coordinates}
-					  			    	onClick={()=> clickLocation(loc)}/>
+					  			    	onClick={()=> clickLocation(data.url,loc)}/>
 					  		)
 					  	})
 					}
@@ -87,7 +88,7 @@ const VlogMapExperience = ({data, itin}) => {
 						<Marker 
 							coordinates={active_pin.coordinates}
 							style={{cursor: "pointer"}} 
-							onClick={()=> clickLocation(active_pin)}>
+							onClick={()=> clickLocation(data.url, active_pin)}>
 							<img src={activePin}/>
 						</Marker>
 					}

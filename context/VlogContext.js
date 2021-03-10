@@ -30,9 +30,11 @@ export const VlogProvider = (props) => {
 		jumpToTimestamp(pin.timestamp);
 	}
 
-	const clickLocation = (loc) => {
+	const clickLocation = (url,loc) => {
+		let add_url = {...loc, url};
+		console.log(add_url);
 		setPlaying(false);
-		setActivePin(loc);
+		setActivePin(add_url);
 		setPlaying(true);
 	}
 

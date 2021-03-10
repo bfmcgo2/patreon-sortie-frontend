@@ -18,7 +18,7 @@ const VlogContainer = ({vlog, action, active_pin, add_action}) => {
 								className = {`${styles.vlog__locations} 
 												${(active_pin && active_pin.order === i ? 
 													styles.active : '')}`} 
-								onClick={()=> action(order)}>
+								onClick={()=> action(vlog.url, order)}>
 
 								<div className={styles.vlog__locations__button}>
 									<p>{loc.name}</p>

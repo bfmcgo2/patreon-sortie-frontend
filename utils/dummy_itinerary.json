@@ -4,8 +4,45 @@
     {
       "id": "0",
       "name": "Asheville Trip",
-      "value": "ashville_trip",
-      "locations": []
+      "value": "asheville_trip",
+      "locations": [
+        {
+          "id": "poi.68719581267",
+          "name": "Early Girl Eatery",
+          "coordinates": [
+            -82.55473,
+            35.594685
+          ],
+          "timestamp": 102.436871,
+          "additional_info": "Long wait",
+          "order": 1,
+          "url": "https://www.youtube.com/watch?v=aaWHRUIwV0s"
+        },
+        {
+          "id": "poi.369367278187",
+          "name": "Biltmore Estate Winery",
+          "coordinates": [
+            -82.581201,
+            35.554951
+          ],
+          "timestamp": 517.92995,
+          "additional_info": "lovely",
+          "order": 4,
+          "url": "https://www.youtube.com/watch?v=aaWHRUIwV0s"
+        },
+        {
+          "id": "poi.489626320107",
+          "name": "Pizza Mind",
+          "coordinates": [
+            -82.575084,
+            35.578099
+          ],
+          "timestamp": 623.729183,
+          "additional_info": "great pizza",
+          "order": 5,
+          "url": "https://www.youtube.com/watch?v=aaWHRUIwV0s"
+        }
+      ]
     },
     {
       "id": "1",

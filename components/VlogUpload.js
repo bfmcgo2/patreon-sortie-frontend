@@ -233,7 +233,7 @@ const VlogUpload = () => {
 						</div>
 					}
 					<div className={styles.vlog__map__slider}>
-						{data.locations.length !== 0 && 
+						{data.locations && data.locations.length !== 0 && 
 							<Slider slides = {data.locations} action={handleEditClick}/>
 						}
 					</div>

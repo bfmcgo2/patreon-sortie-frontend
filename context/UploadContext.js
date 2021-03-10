@@ -40,9 +40,21 @@ export const UploadProvider = (props) => {
 	*Input sets YouTube url for React Player
 	*
 	*/
-	const uploadYouTube = (ev,inp) => {
+	const uploadYouTube = async (ev,inp) => {
 		ev.preventDefault();
 		const add_url = {...data, url: inp};
+		const response = await fetch('http://localhost:1337/vlogs', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				url: inp
+			})
+		})
+
+		const data = await response.json();
+		console.log('data', data)
 		updateData(add_url);
 	}	
 

@@ -24,7 +24,7 @@ const AddToItinerary = ({location, itin}) => {
 			document.removeEventListener("click", handleClickOutside, false);
 		};
 	}, []);
-
+	console.log(location)
 	const handleChange = (event)=>{
 
 		setDropdown( event.target.value);
@@ -50,7 +50,8 @@ const AddToItinerary = ({location, itin}) => {
 
 	const addToItinerary = () => {
 		const findItin = itin.buckets.filter(bucket => bucket.value === dropdown);
-		console.log(findItin)
+		const prettyItin = JSON.stringify(findItin[0], null, 2)
+		console.log(prettyItin);
 		if(findItin.length === 0) return alert('Please select an itinerary')
 		
 		const locations = findItin[0].locations;
@@ -76,8 +77,7 @@ const AddToItinerary = ({location, itin}) => {
 
 				{!itin_type && 
 					<div styles={{display: 'flex', flexDirection:'row'}}>
-						<Button action={()=> itinType('new')}>New Itinerary</Button>
-						<Button action={()=> itinType('add')}>Add To An Itinerary</Button>
+						<Button action={()=> itinType('add')}>Choose An Itinerary</Button>
 					</div>
 					
 				}
