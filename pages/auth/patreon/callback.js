@@ -1,36 +1,36 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import querystring from 'querystring';
+import getConfig from 'next/config';
 
-const Callback = ({tokens, url}) => {
-	const [auth, setAuth] = useState();
+import UserContext from '../../../context/UserContext';
+
+const Callback = ({tokens, resolvedUrl, access_token}) => {
+	const {publicRuntimeConfig} = getConfig();
+	const server = publicRuntimeConfig.SERVER_URL;
+
+	const { setUser } = useContext(UserContext);
 
 	useEffect(async()=> {
-		window.opener.patreonCallback(tokens);
-		if(!location) {
-			console.log('fuck you: ', location)
-			return
-		}
-		const { search } = location;
-		const res = fetch(`http://localhost:1337${url}`);
+		// ie server: http://localhost:1337/
+		// resolvedURL: auth/patreon/callback?access_token=etc etc
+		const res = fetch(`${server}${resolvedUrl}`);
 		const user = await res;
-		console.log(user);
 		const user_data = await user.json();
-		console.log(user_data)
+		window.opener.patreonCallback(user_data, access_token);
 	},[])
 	return (
 	<div>		
-		It Worked!
+
 	</div>
 	)
 }
 
 export async function getServerSideProps(props) {
-	console.log('START HERE', props);
-	
 	return {
 		props: {
 			tokens:null,
-			url: props.resolvedUrl
+			resolvedUrl: props.resolvedUrl,
+			access_token: props.query.access_token
 		}
 	}
 }
