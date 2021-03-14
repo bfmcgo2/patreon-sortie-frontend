@@ -1,6 +1,15 @@
 import cookie from 'cookie';
+import { getCurrentUser } from '../../lib/patreon';
 
-export default (req, res) => {
+export default async(req, res) => {
+	const response = await getCurrentUser(req.body.access_token);
+	const user = await response.json();
+	console.log(user.data.relationships.pledges.data)
+
+	if(user.data.relationships.pledges.data.length === 0 ) {
+		console.log('denied: ', res)
+		return res.status(401).json({ error: 'Unauthorized' })
+	}
 
 	const cookie_format = (name, body) => {
 		return cookie.serialize(name, body, {

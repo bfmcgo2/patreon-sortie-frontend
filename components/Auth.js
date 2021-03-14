@@ -1,14 +1,16 @@
-import { useContext } from 'react';
-import { useRouter } from 'next/router'
-import { Button, Box, useColorModeValue as mode, Container, Text, Center  } from "@chakra-ui/react"
+import { useContext, useState } from 'react';
+import { Button, Box, useColorModeValue as mode, Container, Text  } from "@chakra-ui/react"
 import { FaPatreon } from 'react-icons/fa';
 import getConfig from 'next/config';
+
+import AlertMessage from './shared/AlertMessage';
 
 import UserContext from '../context/UserContext';
 
 const Auth = (props) => {
 	const { setUser, user } = useContext(UserContext);
 	// get server url
+	const [error, setError] = useState(false);
 	const { publicRuntimeConfig } = getConfig();
 	const server = publicRuntimeConfig.SERVER_URL;
 
@@ -30,14 +32,27 @@ const Auth = (props) => {
 					jwt: user.jwt,
 					access_token:access_token,
 				})
-			}).then(data=> {
+			}).then((data, i)=> {
+				console.log(data);
 				if(data.status === 200) {
 					window.location.replace(window.location.href)
+				}
+				if(data.status === 401) {
+					setError(true)
 				}
 			})
 
 		}
 	}
+
+	const alertResponse = () => {
+		window.open(
+		  'https://www.patreon.com/sortie/',
+		  '_blank' // <- This is what makes it open in a new window.
+		);
+		setError(false);
+	}
+
 	return (
 		<Container 
 			maxW="100%" 
@@ -46,6 +61,14 @@ const Auth = (props) => {
 			justifyContent='center' 
 			centerContent 
 			backgroundColor='tomato'>
+
+			{error &&
+				<AlertMessage 
+					title = "Please Sign Up for this Patreon!"
+					button = "Join Sortie on Patreon!" 
+					action = {alertResponse}/>
+				
+			}
 			
 			<Box
 				bg={mode('white', 'gray.700')}
@@ -71,7 +94,6 @@ const Auth = (props) => {
 		          Build an Itinerary from your favorite YouTubers
 		        </Box>
 		      </Box>
-
 		      <Button 
 		        colorScheme="gray" 
 		        leftIcon={<FaPatreon color={"rgb(255,66,77)"}/>}
