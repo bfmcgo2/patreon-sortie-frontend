@@ -8,42 +8,13 @@ import AlertMessage from './shared/AlertMessage';
 import UserContext from '../context/UserContext';
 
 const Auth = (props) => {
-	const { setUser, user } = useContext(UserContext);
+	const { login } = useContext(UserContext);
 	// get server url
 	const [error, setError] = useState(false);
 	const { publicRuntimeConfig } = getConfig();
 	const server = publicRuntimeConfig.SERVER_URL;
 
-	const login = () =>{
-		const getLoginURL = `${server}/connect/patreon`;
-		// Show patreon auth popup
-		const popup = window.open(getLoginURL, 'Patreon', 'height=600,width=400');
-		window.patreonCallback = (user, access_token) => {
-			// Sets user after authenticating then closes window
-			
-			popup.close()
-			setUser(user)
-			fetch("/api/login", {
-				method: "post",
-				headers: {
-					"Content-Type": "application/json"
-				},
-				body: JSON.stringify({
-					jwt: user.jwt,
-					access_token:access_token,
-				})
-			}).then((data, i)=> {
-				console.log(data);
-				if(data.status === 200) {
-					window.location.replace(window.location.href)
-				}
-				if(data.status === 401) {
-					setError(true)
-				}
-			})
-
-		}
-	}
+	
 
 	const alertResponse = () => {
 		window.open(

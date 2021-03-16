@@ -8,7 +8,6 @@ const Callback = ({tokens, resolvedUrl, access_token}) => {
 	const {publicRuntimeConfig} = getConfig();
 	const server = publicRuntimeConfig.SERVER_URL;
 
-	const { setUser } = useContext(UserContext);
 
 	useEffect(async()=> {
 		// ie server: http://localhost:1337/
