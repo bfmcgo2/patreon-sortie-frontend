@@ -1,7 +1,6 @@
 import { useContext, useState } from 'react';
-import { Button, Box, useColorModeValue as mode, Container, Text  } from "@chakra-ui/react"
+import { Button, Box, useColorModeValue as mode, Container, Text  } from "@chakra-ui/react";
 import { FaPatreon } from 'react-icons/fa';
-import getConfig from 'next/config';
 
 import AlertMessage from './shared/AlertMessage';
 
@@ -11,8 +10,6 @@ const Auth = (props) => {
 	const { login } = useContext(UserContext);
 	// get server url
 	const [error, setError] = useState(false);
-	const { publicRuntimeConfig } = getConfig();
-	const server = publicRuntimeConfig.SERVER_URL;
 
 	
 

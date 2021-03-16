@@ -20,9 +20,17 @@ export default async(req, res) => {
 			path: '/'
 		})
 	}
+	const { email, full_name, image_url, url} = user.data.attributes
 
 	res.setHeader('Set-Cookie', [cookie_format('jwt', req.body.jwt), cookie_format('access_token', req.body.access_token)])
 	res.statusCode = 200;
-	res.json({ success: true });
+	res.json({
+		user: {
+			email,
+			full_name,
+			image_url,
+			url
+		} 
+	});
 }
 

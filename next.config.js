@@ -9,6 +9,7 @@ module.exports = {
         PATREON_CLIENT_SECRET: process.env.PATREON_CLIENT_SECRET
 	},
 	publicRuntimeConfig: {   
-	    SERVER_URL: (env === 'development' ? 'http://localhost:1337':'https://sortie-patreon.herokuapp.com')    
+	    SERVER_URL: (env === 'development' ? 'http://localhost:1337':'https://sortie-patreon.herokuapp.com'),
+	    CLIENT_URL: 'http://localhost:3000'   
 	}
 };

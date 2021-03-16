@@ -1,9 +1,9 @@
 import { useState, useEffect, useContext } from 'react';
-import * as turf from '@turf/turf';
 import { Layer, Feature, Marker } from "react-mapbox-gl";
 
 import styles from '../styles/Vlog.module.css';
 
+import { setBbox } from '../utils/setBbox';
 
 import VlogContext from '../context/VlogContext';
 
@@ -17,11 +17,7 @@ const VlogMapExperience = ({data, itin}) => {
 	const { active_pin, setActivePin, map, setMapCenter, map_center, clickLocation, video_time, openItin }= useContext(VlogContext);	
 
 	useEffect(()=>{
-		const coords = data.locations.map(loc=>loc.coordinates);
-		const line = turf.lineString(coords);
-		const bbox = turf.bbox(line);
-		const center_point = turf.center(line);
-		const bbox_arr = [[bbox[0], bbox[1]], [bbox[2], bbox[3]]];
+		const { bbox_arr, center_point } = setBbox(data)
 		
 		if(map){
 			map.fitBounds(bbox_arr, {
@@ -56,8 +52,6 @@ const VlogMapExperience = ({data, itin}) => {
 		return order.filter(loc => loc.id !== active_pin.id);
 	}
 
-
-	let regPin = 'http://www.myiconfinder.com/uploads/iconsets/48-48-8055c322ae4049897caa15e5331940f2.png';
 	let activePin = 'http://www.myiconfinder.com/uploads/iconsets/48-48-805acbe9bb30960ac19dded197fbf2e8.png'
 	return (
 		<div className={styles.container}>
@@ -73,25 +67,32 @@ const VlogMapExperience = ({data, itin}) => {
 
 					<AddToItinerary location ={active_pin} itin={itin}/>
 
-					<Layer type="symbol" id="marker" layout={{ 'icon-image': 'harbor-15' }}>
+					<Layer 
+						type="symbol" 
+						id="reg_marker" 
+						layout={{ 'icon-image': 'harbor-15' }}>
 					{ removeActiveLocations().map((loc,i)=> {
 					  		return(
-					  			    <Feature 
-						  			    key = { i }
-					  			    	coordinates={loc.coordinates}
-					  			    	onClick={()=> clickLocation(data.url,loc)}/>
+				  			    <Feature 
+					  			    key = { i }
+				  			    	coordinates={loc.coordinates}
+				  			    	onClick={()=> clickLocation(data.url,loc)}/>
 					  		)
 					  	})
 					}
 				  	</Layer>
+				  	<Layer type="circle" id="active_marker" paint={{
+				  	  'circle-color': "#ff5200",
+				  	  'circle-stroke-width': 1,
+				  	  'circle-stroke-color': '#fff',
+				  	  'circle-stroke-opacity': 1
+				  	 }}>
 					{ active_pin &&
-						<Marker 
-							coordinates={active_pin.coordinates}
-							style={{cursor: "pointer"}} 
-							onClick={()=> clickLocation(data.url, active_pin)}>
-							<img src={activePin}/>
-						</Marker>
+		  			    <Feature 
+		  			    	coordinates={active_pin.coordinates}
+		  			    	onClick={()=> clickLocation(data.url, active_pin)}/>
 					}
+					</Layer>
 
 			</Map>  
 		</div>	

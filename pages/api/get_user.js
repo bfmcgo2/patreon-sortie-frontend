@@ -2,13 +2,19 @@ import cookie from 'cookie';
 import { getCurrentUser } from '../../lib/patreon';
 
 export default async(req, res) => {
-	console.log("REQ: ", "RES: ")
-	const response = await getCurrentUser(req.body.access_token);
+	const response = await getCurrentUser(req.query.access_token);
 	const user = await response.json();
-	console.log(user.data);
 
+	const { email, full_name, image_url, url} = user.data.attributes
 
 	res.statusCode = 200;
-	res.json({ success: true });
+	res.json({ 
+		user: {
+			email,
+			full_name,
+			image_url,
+			url
+		} 
+	});
 }
 

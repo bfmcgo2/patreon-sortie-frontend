@@ -13,9 +13,16 @@ import { Button,
 
 import UserContext from '../../context/UserContext';
 
-const Header = ({itinOpen}) => {
+const Header = ({itinOpen, user}) => {
   const { logout } = useContext(UserContext);
-  
+
+  const userPage = () => {
+    window.open(
+      user.url,
+      '_blank' // <- This is what makes it open in a new window.
+    );
+  }
+
   return (
     <Flex 
       position="fixed"
@@ -42,10 +49,11 @@ const Header = ({itinOpen}) => {
         </Button>
         <Menu >
           <MenuButton >
-            <Avatar as={IconButton} cursor="pointer" name="Dan Abrahmov" src="https://bit.ly/dan-abramov" />
+            <Avatar as={IconButton} cursor="pointer" name={user.full_name} src={user.image_url} />
           </MenuButton>
           
           <MenuList>
+            <MenuItem onClick={userPage}>User Patreon Page</MenuItem>
             <MenuItem onClick={logout}>Logout</MenuItem>
           </MenuList>
         </Menu>
@@ -55,5 +63,7 @@ const Header = ({itinOpen}) => {
     
   )
 }
+
+
 
 export default Header;
