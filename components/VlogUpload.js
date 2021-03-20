@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from 'react';
 import { Layer, Feature } from "react-mapbox-gl";
+import { Box } from "@chakra-ui/react";
 
 import UploadContext from '../context/UploadContext';
 import GlobalContext from '../context/GlobalContext';
@@ -15,6 +16,8 @@ import Video from './shared/Video';
 import Card from './shared/Card';
 import Button from './shared/Button';
 import Slider from './shared/Slider';
+
+import Upload from './Upload';
 
 const VlogUpload = () => {
 	// Context data/actions
@@ -119,31 +122,22 @@ const VlogUpload = () => {
 
 
 	return (
-		<div className={styles.VlogUpload}>
+		<Box
+			display= 'flex'
+			flexDirection= 'row'>
 			<div className={styles.vlog__builder}>
-				{!data.url ?  
-					<div className={styles.add__vlog}>
-					
-						<form onSubmit={(ev)=> uploadYouTube(ev, url)}>	
-							<Input 
-								action={updateURL} 
-								locked={false} 
-								active={false} 
-								light={true} 
-								label={'Upload Vlog'}
-								type={'text'}
-								clear={clear}/>
-						</form>
-					</div>
-				:	<Video url={data.url}/>
-				}
 				
+				<Upload 
+					url={ url }
+					updateURL = {updateURL} 
+					clear = { clear }/>
 				
+
 				<div className={styles.location__search}>
 					<div className={styles.input__container}>
 						<Input 
 							action ={throttledGeocoder} 
-							locked={!data.url ? true : false} 
+							locked={!url ? true : false} 
 							active={false} 
 							light={true} 
 							label={'Add Location To Vlog'}
@@ -241,7 +235,7 @@ const VlogUpload = () => {
 					
 				</Map>
 			</div>
-		</div>
+		</Box>
 	)
 }
 

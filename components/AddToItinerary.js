@@ -17,6 +17,7 @@ const AddToItinerary = ({location, itin}) => {
 	const [clear, setClear] = useState(false);
 
 	const wrapperRef = useRef(null);
+	
 	  // below is the same as componentDidMount and componentDidUnmount
 	useEffect(() => {
 		document.addEventListener("click", handleClickOutside, false);
@@ -24,7 +25,6 @@ const AddToItinerary = ({location, itin}) => {
 			document.removeEventListener("click", handleClickOutside, false);
 		};
 	}, []);
-	console.log(location)
 	const handleChange = (event)=>{
 
 		setDropdown( event.target.value);

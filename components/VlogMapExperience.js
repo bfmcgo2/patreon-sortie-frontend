@@ -33,8 +33,12 @@ const VlogMapExperience = ({data, itin}) => {
 
 	useEffect(()=> {
 		const timestamps = data.locations.map(loc => loc.timestamp);
+		const tot_timestamps = timestamps.length
 		data.locations.map((loc, i) => {
-			if(video_time > loc.timestamp && video_time < timestamps[i+1]) {
+			const trigger_timestamp = video_time > loc.timestamp && video_time < timestamps[i+1];
+			const last_timestamp = video_time > timestamps[tot_timestamps - 1]
+
+			if( trigger_timestamp || last_timestamp) {
 				let order = {...loc, order: i, url: data.url}
 				setActivePin(order);
 			}

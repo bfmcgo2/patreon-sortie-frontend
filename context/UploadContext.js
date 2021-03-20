@@ -21,7 +21,7 @@ export const UploadProvider = (props) => {
 	/**
 	*Input fetches address
 	*/
-
+	console.log(url)
 	const searchMapboxGeocoder = async(inp) => {
 		if(!inp) {
 			updateSearch(null)

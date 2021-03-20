@@ -1,8 +1,3 @@
-.VlogUpload {
-	display: flex;
-	flex-direction: row;
-}
-
 .vlog__map {
 	flex-grow: 3;
 	height: 100vh;
