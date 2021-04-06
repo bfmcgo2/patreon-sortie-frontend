@@ -7,7 +7,6 @@ export default async(req, res) => {
 	console.log(user.data.relationships.pledges.data)
 
 	if(user.data.relationships.pledges.data.length === 0 ) {
-		console.log('denied: ', res)
 		return res.status(401).json({ error: 'Unauthorized' })
 	}
 

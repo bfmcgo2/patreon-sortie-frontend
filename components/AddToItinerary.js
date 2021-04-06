@@ -1,5 +1,8 @@
 import { useState, useEffect, useContext, useRef } from 'react';
 
+import getConfig from 'next/config';
+const {publicRuntimeConfig} = getConfig();
+const CLIENT = publicRuntimeConfig.CLIENT_URL;
 
 import styles from '../styles/AddToItinerary.module.css';
 
@@ -25,8 +28,7 @@ const AddToItinerary = ({location, itin}) => {
 			document.removeEventListener("click", handleClickOutside, false);
 		};
 	}, []);
-	const handleChange = (event)=>{
-
+	const handleChange = event=>{
 		setDropdown( event.target.value);
 	}
 
@@ -35,6 +37,19 @@ const AddToItinerary = ({location, itin}) => {
 			reset()
 		}
 	};
+
+	const updateItinerary = async(loc, itin) => {
+		const add_itin = await fetch(`${CLIENT}/api/itinerary/update_itinerary`, {
+		  method: "POST",
+		  headers: {
+		    "Content-Type": "application/json"
+		  },
+		  body: JSON.stringify({
+		    loc,
+		    itin
+		  })
+		})
+	}
 
 	const reset = () => {
 		setClear(true);
@@ -48,21 +63,42 @@ const AddToItinerary = ({location, itin}) => {
 		setItinType(type)
 	}
 
-	const addToItinerary = () => {
-		const findItin = itin.buckets.filter(bucket => bucket.value === dropdown);
-		const prettyItin = JSON.stringify(findItin[0], null, 2)
-		console.log(prettyItin);
-		if(findItin.length === 0) return alert('Please select an itinerary')
-		
-		const locations = findItin[0].locations;
-		const idCheck = locations.map((e)=>{ return e.id; }).indexOf(location.id);
+	const getOneItinerary =async(id) => {
+		const get_itin = await fetch(`${CLIENT}/api/itinerary/get_itinerary`, {
+		  method: "POST",
+		  headers: {
+		    "Content-Type": "application/json"
+		  },
+		  body: JSON.stringify({
+		    id
+		  })
+		})
+		const itinerary = await get_itin.json();
+		return itinerary
+	}
 
-		if(idCheck !== -1) {
-			reset()
-			return alert('Location exists in itinerary!')
-		}
+	const addToItinerary = async() => {
+
+		const findItin = itin.filter(bucket => {
+			return bucket.name === dropdown
+		});
+
+		const itinerary = await getOneItinerary(findItin[0].id);
 		
-		findItin[0].locations.push(location);
+
+		updateItinerary(location, itinerary)
+		// console.log(location, findItin)
+		// if(findItin.length === 0) return alert('Please select an itinerary')
+		
+		// const locations = findItin[0].locations;
+		// const idCheck = locations.map((e)=>{ return e.id; }).indexOf(location.id);
+
+		// if(idCheck !== -1) {
+		// 	reset()
+		// 	return alert('Location exists in itinerary!')
+		// }
+		
+		// findItin[0].locations.push(location);
 		reset()
 		alert('Location added!')
 		
@@ -87,9 +123,9 @@ const AddToItinerary = ({location, itin}) => {
 						<select value={dropdown} onChange={handleChange} name="itin-bucket">
 							<option disabled selected value={''}> -- select an option -- </option>
 							{
-								itin && itin.buckets.map((bucket, i)=>{
+								itin.map((bucket, i)=>{
 									return(
-										<option key={i} value={bucket.value}>{bucket.name}</option>
+										<option key={i} value={bucket.name}>{bucket.name}</option>
 									)
 								})
 							}

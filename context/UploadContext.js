@@ -39,7 +39,6 @@ export const UploadProvider = (props) => {
 	*/
 	const uploadYouTube = async (ev,inp) => {
 		ev.preventDefault();
-		console.log(data)
 		const response = await fetch('http://localhost:1337/vlogs', {
 			method: 'POST',
 			headers: {
@@ -52,7 +51,6 @@ export const UploadProvider = (props) => {
 		})
 
 		const json = await response.json();
-		console.log('data', json)
 	}	
 
 	
