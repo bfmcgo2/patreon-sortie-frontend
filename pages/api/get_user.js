@@ -1,4 +1,3 @@
-import cookie from 'cookie';
 import { getCurrentUser } from '../../lib/patreon';
 
 export default async(req, res) => {

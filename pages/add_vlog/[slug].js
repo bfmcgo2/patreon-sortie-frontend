@@ -2,7 +2,7 @@ import Head from 'next/head'
 
 import { UploadProvider } from '../../context/UploadContext';
 
-import VlogUpload from '../../components/VlogUpload';
+import VlogUpload from '../../components/VlogUpload/VlogUpload';
 
 const Vlog = () => {
 

@@ -14,8 +14,6 @@ const Map = ReactMapboxGl({
 const MapComponent = (props) => {
 	const { mapControls } = useContext(MapContext);
 
-	const [map_center, setMapCenter] = useState(null)
-
 	return(
 		<div className={styles.map_container}>
 			<Map

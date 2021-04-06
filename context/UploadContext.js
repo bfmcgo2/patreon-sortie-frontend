@@ -5,23 +5,22 @@ const UploadContext = createContext();
 
 
 export const UploadProvider = (props) => {
-	const [data, updateData] = 
+	const [ data, updateData ] = 
 	useState({
 		url:'',
 		locations:[]
 	});
 	// Upload State
-	const [location, setLocation] = useState(); //new location in vlog
-	const [edit_location, editLocation] = useState(false);
+	const [location, setLocation] = useState(null); //new location in vlog
+	const [edit_location, editLocation] = useState(null);
 	const [new_marker, createNewMarker] = useState([-118.5309, 34.3847]); //Adds marker on location click
 	const [url, updateURL] = useState(''); //Youtube video URL
-	const [results, updateSearch] = useState();
+	const [results, updateSearch] = useState(); //Geocode results
 	const [loading, setLoading] = useState(false);
 
 	/**
 	*Input fetches address
 	*/
-	console.log(url)
 	const searchMapboxGeocoder = async(inp) => {
 		if(!inp) {
 			updateSearch(null)
@@ -34,28 +33,26 @@ export const UploadProvider = (props) => {
 		updateSearch(locations.features);
 	}
 	const throttledGeocoder = _.debounce(searchMapboxGeocoder, 400);
-
-
 	/**
 	*Input sets YouTube url for React Player
 	*
 	*/
 	const uploadYouTube = async (ev,inp) => {
 		ev.preventDefault();
-		const add_url = {...data, url: inp};
+		console.log(data)
 		const response = await fetch('http://localhost:1337/vlogs', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
-				url: inp
+				url: data.url,
+				locations: data.locations
 			})
 		})
 
-		const data = await response.json();
-		console.log('data', data)
-		updateData(add_url);
+		const json = await response.json();
+		console.log('data', json)
 	}	
 
 	
@@ -64,6 +61,13 @@ export const UploadProvider = (props) => {
 		console.log(JSON.stringify(data, null, 2));
 
 	}, [data])
+
+	useEffect(()=> {
+		updateData({
+			...data,
+			url
+		})
+	}, [url])
 
 // value={{ user, loginUser, logoutUser, getToken }}
 	return (

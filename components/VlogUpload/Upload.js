@@ -1,11 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { AspectRatio, Box } from "@chakra-ui/react";
 
-import Input from './shared/Input';
-import Video from './shared/Video';
+import Input from '../shared/Input';
+import Video from '../shared/Video';
+
+import UploadContext from '../../context/UploadContext';
 
 
-const Upload = ({ url, updateURL, clear }) => {
+const Upload = ({ clear }) => {
+
+	const { url, updateURL } = useContext(UploadContext);
 	return (
 		<Box >
 			{!url ?  
@@ -16,7 +20,7 @@ const Upload = ({ url, updateURL, clear }) => {
 					height="40vh"
 					backgroundColor="rgb(19,24,58)">
 
-					<form onSubmit={(ev)=> console.log(oops)}>	
+					<form>	
 						<Input 
 							action={updateURL} 
 							locked={false} 

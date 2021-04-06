@@ -17,7 +17,7 @@ export const GlobalProvider = (props) => {
 	*/
 	const jumpToLocation = (coords, offset) => {
 		map.jumpTo({
-			center: [coords[0],coords[1]],
+			center: coords,
 			zoom: [15]
 		});
 	};

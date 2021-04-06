@@ -6,6 +6,7 @@ import styles from '../styles/Vlog.module.css';
 import { setBbox } from '../utils/setBbox';
 
 import VlogContext from '../context/VlogContext';
+import MapContext from '../context/MapContext';
 
 import Map from './shared/Map';
 
@@ -14,7 +15,8 @@ import VlogContainer from './VlogContainer';
 import AddToItinerary from './AddToItinerary';
 
 const VlogMapExperience = ({data, itin}) => {
-	const { active_pin, setActivePin, map, setMapCenter, map_center, clickLocation, video_time, openItin }= useContext(VlogContext);	
+	const { active_pin, setActivePin, map, clickLocation, video_time, openItin }= useContext(VlogContext);
+	const { setMapCenter, map_center} = useContext(MapContext);
 
 	useEffect(()=>{
 		const { bbox_arr, center_point } = setBbox(data)
