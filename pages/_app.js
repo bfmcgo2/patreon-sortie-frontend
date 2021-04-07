@@ -6,6 +6,7 @@ import { VideoProvider } from '../context/VideoContext';
 import { MapProvider } from '../context/MapContext';
 import { GlobalProvider } from '../context/GlobalContext';
 import { UserProvider } from '../context/UserContext';
+import { ItineraryProvider } from '../context/ItineraryContext';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -13,9 +14,11 @@ function MyApp({ Component, pageProps }) {
   		<VideoProvider>
   			<MapProvider>
   				<GlobalProvider>
-  					<ChakraProvider>
-  						<Component {...pageProps} />
-  					</ChakraProvider>
+            <ItineraryProvider>
+    					<ChakraProvider>
+    						<Component {...pageProps} />
+    					</ChakraProvider>
+            </ItineraryProvider>
   				</GlobalProvider>
   			</MapProvider>
   		</VideoProvider>

@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import getConfig from 'next/config';
 import cookie from 'cookie'
 import { 
@@ -21,12 +21,14 @@ const CLIENT = publicRuntimeConfig.CLIENT_URL;
 import Input from './Input';
 import Popover from './Popover';
 
-const DrawerComponent = ({ isOpen, onClose, user, addItin, itin}) => {
+import ItineraryContext from '../../context/ItineraryContext';
 
-  const [itin_name, createItinName] = useState(''); //create itinerary bucket
+const DrawerComponent = ({ isOpen, onClose}) => {
+  const { itin, addItin, createItinName, itin_name } = useContext(ItineraryContext);
+  
+
   const btnRef = useRef();
 
-  console.log(itin)
 
   return (
     <>
@@ -44,7 +46,7 @@ const DrawerComponent = ({ isOpen, onClose, user, addItin, itin}) => {
                 {itin &&
                   itin.map((loc, i)=> {
                     return(
-                      <Link href={`/itineraries/${loc.id}`}>
+                      <Link href={`/itineraries/${loc.id}`} key={i}>
                          <Button onClick={onClose}>{loc.name}</Button>
                        </Link>
                       
@@ -55,8 +57,15 @@ const DrawerComponent = ({ isOpen, onClose, user, addItin, itin}) => {
             </DrawerBody>
             <DrawerFooter>
               <Popover 
-                createItinName={createItinName}
-                action={()=> addItin(itin_name)}/>
+                action={()=> addItin(itin_name)}>
+                <Input 
+                  action ={createItinName} 
+                  locked={false} 
+                  active={false} 
+                  light={false} 
+                  label={'Create Itinerary'}
+                  type={'text'}/>
+              </Popover>
               <Button variant="outline"  onClick={onClose}>
                 Cancel
               </Button>

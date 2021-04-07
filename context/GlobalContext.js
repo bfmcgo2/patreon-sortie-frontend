@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from 'react';
 
 import VideoContext from './VideoContext';
 import MapContext from './MapContext';
+import UserContext from './UserContext';
 
 import { roundTime, fmtMSS } from '../utils/format';
 
@@ -11,6 +12,7 @@ const GlobalContext = createContext();
 export const GlobalProvider = (props) => {
 	const { video_time, video_ref, setPlaying, playing } = useContext(VideoContext);
 	const { map } = useContext(MapContext);
+	const { user, setUser } = useContext(UserContext);
 
 	/**
 	*Jumps to location in Map

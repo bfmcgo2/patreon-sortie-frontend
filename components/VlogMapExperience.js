@@ -14,7 +14,7 @@ import Map from './shared/Map';
 import VlogContainer from './VlogContainer';
 import AddToItinerary from './AddToItinerary';
 
-const VlogMapExperience = ({data, itin}) => {
+const VlogMapExperience = ({data}) => {
 	const { active_pin, setActivePin, map, clickLocation, video_time, openItin }= useContext(VlogContext);
 	const { setMapCenter, map_center} = useContext(MapContext);
 
@@ -71,7 +71,7 @@ const VlogMapExperience = ({data, itin}) => {
 						active_pin={ active_pin }
 						add_action = { openItin }/>
 
-					<AddToItinerary location ={active_pin} itin={itin}/>
+					<AddToItinerary location ={active_pin}/>
 
 					<Layer 
 						type="symbol" 

@@ -9,9 +9,7 @@ export default async(req, res) => {
 			Authorization: req.headers.authorization
 		}
 	})
-	console.log(response)
 	const itineraries = await response.json();
-	console.log("response: ", response.status, ">>>>>>>>");
 	
 	if(response.status > 200) {
 		res.json({error: response.statusText});		

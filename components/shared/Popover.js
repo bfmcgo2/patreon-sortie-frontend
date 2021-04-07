@@ -14,7 +14,7 @@ import {
 import Input from './Input';
 
 
-const PopoverComponent = ({ action, createItinName }) => {
+const PopoverComponent = (props) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const initRef =useRef()
 
@@ -37,19 +37,13 @@ const PopoverComponent = ({ action, createItinName }) => {
               flexDirection="column"
               justifyContent="center">
               <Box padding="10px 0">
-                <Input 
-                  action ={createItinName} 
-                  locked={false} 
-                  active={false} 
-                  light={false} 
-                  label={'Create Itinerary'}
-                  type={'text'}/>
+                {props.children}
               </Box>
               
               <Button 
                 color="blue"
                 onClick={()=> {
-                  action();
+                  props.action();
                   onClose();
                 }}>Confirm</Button>
             </PopoverBody>

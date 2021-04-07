@@ -57,7 +57,7 @@ export const UserProvider = (props) => {
 		const response = await user_login;
 		const user_res = await response.json();
 		if(response.status === 200) {
-			setUser(user_res);
+			setUser({...user_res.user, jwt});
 			window.location.replace(window.location.href);
 		}
 		if(response.status === 401) {
@@ -67,7 +67,7 @@ export const UserProvider = (props) => {
 	}
 
 	return (
-		<UserContext.Provider value={{ auth, setAuth, logout, login, user }}>
+		<UserContext.Provider value={{ auth, setAuth, logout, login, user, setUser }}>
 			{props.children}
 		</UserContext.Provider>
 	)

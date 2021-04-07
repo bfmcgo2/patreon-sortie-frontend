@@ -13,8 +13,8 @@ import { Button,
 
 import UserContext from '../../context/UserContext';
 
-const Header = ({itinOpen, user}) => {
-  const { logout } = useContext(UserContext);
+const Header = ({itinOpen}) => {
+  const { logout, user } = useContext(UserContext);
 
   const userPage = () => {
     window.open(
@@ -49,7 +49,10 @@ const Header = ({itinOpen, user}) => {
         </Button>
         <Menu >
           <MenuButton >
+          {user && 
             <Avatar as={IconButton} cursor="pointer" name={user.full_name} src={user.image_url} />
+          }
+           
           </MenuButton>
           
           <MenuList>

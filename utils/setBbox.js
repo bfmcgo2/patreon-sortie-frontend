@@ -2,6 +2,8 @@ import * as turf from '@turf/turf';
 
 export const setBbox = (data) => {
 	const coords = data.locations.map(loc=>loc.coordinates);
+	console.log(coords)
+
 	const line = turf.lineString(coords);
 	const bbox = turf.bbox(line);
 	const center_point = turf.center(line);

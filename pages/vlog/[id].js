@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { useDisclosure  } from "@chakra-ui/react";
 import getConfig from 'next/config';
 import cookie from 'cookie';
@@ -13,6 +13,8 @@ import VlogMapExperience from '../../components/VlogMapExperience';
 import Header from '../../components/shared/Header';
 import Drawer from '../../components/shared/Drawer';
 
+import UserContext from '../../context/UserContext';
+
 const {publicRuntimeConfig} = getConfig();
 const server = publicRuntimeConfig.SERVER_URL;
 const CLIENT = publicRuntimeConfig.CLIENT_URL;
@@ -20,58 +22,26 @@ const CLIENT = publicRuntimeConfig.CLIENT_URL;
 
 const Vlog = ({data, authenticated, user}) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [itin, setItin] = useState([]); //set initial itineraries
 	const [loading, setLoading] = useState(true);
-
-
-
-	const fetchItineraries = async() => {
-	  const res = await fetch(`${CLIENT}/api/itinerary/get_itineraries`,{
-	    headers: {
-	      Authorization: `Bearer ${user.jwt}`
-	    }
-	  });
-	  const itineraries = await res.json();
-	  setItin(itineraries)
-	  setLoading(false);
-	}
-
-	const addItin = async(itin_name) => {
-	  const add_itin = await fetch(`${CLIENT}/api/itinerary/add_itinerary`, {
-	    method: "post",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({
-	      itin_name
-	    })
-	  })
-	  const res = await add_itin;
-	  const add_res = await res.json();
-	  fetchItineraries();
-	}
+	const { setUser } = useContext(UserContext); 
 
 	useEffect(()=> {
-	  fetchItineraries();
-	},[])
-	console.log(itin)
+		if(user) {
+			setUser(user)
+		} 
+	},[user])
+
 	return (
 		<div>
-			{loading &&
-				<p>loading..</p>
-			}
-			{ authenticated && user && itin && data ? 
+			{ authenticated && user && data ? 
 				<>
-					<Header itinOpen = {onOpen} user={user}/>
+					<Header itinOpen = {onOpen}/>
 					<Drawer 
 						isOpen ={isOpen}
 						onOpen ={onOpen}
-						onClose= {onClose}
-						itin = { itin }
-						user= { user } 
-						addItin= { addItin }/>
+						onClose= {onClose}/>
 				<VlogProvider>
-					<VlogMapExperience data={data} itin = {itin}/>
+					<VlogMapExperience data={data}/>
 				</VlogProvider>
 				</>
 				: <Auth />

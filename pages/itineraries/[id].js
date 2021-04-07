@@ -1,5 +1,5 @@
 import cookie from 'cookie';
-import { useState, useEffect} from 'react';
+import { useEffect, useContext } from 'react';
 import { useDisclosure  } from "@chakra-ui/react";
 import getConfig from 'next/config';
 
@@ -10,60 +10,39 @@ import Auth from '../../components/Auth';
 import Header from '../../components/shared/Header';
 import Drawer from '../../components/shared/Drawer';
 
+import ItineraryMapExperience from '../../components/ItineraryMapExperience';
+
+import UserContext from '../../context/UserContext';
+import ItineraryContext from '../../context/ItineraryContext';
+
 const {publicRuntimeConfig} = getConfig();
-const server = publicRuntimeConfig.SERVER_URL;
 const CLIENT = publicRuntimeConfig.CLIENT_URL;
 
-const Itinerary = ({authenticated, user}) => {
+const Itinerary = ({authenticated, user, id}) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
-	const [itin, setItin] = useState([]); //set initial itineraries
-	const [loading, setLoading] = useState(true);
-
-	const fetchItineraries = async() => {
-	  const res = await fetch(`${CLIENT}/api/itinerary/get_itineraries`,{
-	    headers: {
-	      Authorization: `Bearer ${user.jwt}`
-	    }
-	  });
-	  const itineraries = await res.json();
-	  setItin(itineraries)
-	  setLoading(false);
-	}
-
-	const addItin = async(itin_name) => {
-	  const add_itin = await fetch(`${CLIENT}/api/itinerary/add_itinerary`, {
-	    method: "post",
-	    headers: {
-	      "Content-Type": "application/json"
-	    },
-	    body: JSON.stringify({
-	      itin_name
-	    })
-	  })
-	  const res = await add_itin;
-	  const add_res = await res.json();
-	  fetchItineraries();
-	}
-
-	useEffect(()=> {
-	  fetchItineraries();
-	},[])
+	const { setUser } = useContext(UserContext);
+	const { setActiveItin, getOneItinerary, active_itin } = useContext(ItineraryContext)
+	console.log(active_itin);
+	useEffect(async()=> {
+		if(user) {
+			setUser(user)
+			const itinerary = await getOneItinerary(id);
+			setActiveItin(itinerary.itinerary);
+		} 
+	},[user])
 
 	return (
 		<div>
-			{loading &&
-				<p>loading..</p>
-			}
 			{ authenticated && user ? 
 				<>
-					<Header itinOpen = {onOpen} user={user}/>
+					<Header itinOpen = {onOpen}/>
 					<Drawer 
 						isOpen ={isOpen}
 						onOpen ={onOpen}
-						onClose= {onClose}
-						itin = { itin }
-						user= { user } 
-						addItin= { addItin }/>
+						onClose= {onClose}/>
+					{
+						<ItineraryMapExperience />
+					}
 				</>
 				: <Auth />
 			}
@@ -78,6 +57,9 @@ export async function getServerSideProps(ctx, d) {
 	const authenticated = authCheck(ctx);
 	const user_response = await userData(ctx);
 
+	
+
+	console.log(id)
 	let user;
 
 	if (!user_response) {
@@ -90,7 +72,8 @@ export async function getServerSideProps(ctx, d) {
 		props: {
 			  // because the API response for filters is an array
 			authenticated,
-			user
+			user,
+			id
 		}
 	}
 }
