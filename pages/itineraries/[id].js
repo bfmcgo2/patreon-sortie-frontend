@@ -22,7 +22,6 @@ const Itinerary = ({authenticated, user, id}) => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const { setUser } = useContext(UserContext);
 	const { setActiveItin, getOneItinerary, active_itin } = useContext(ItineraryContext)
-	console.log(active_itin);
 	useEffect(async()=> {
 		if(user) {
 			setUser(user)
@@ -41,7 +40,7 @@ const Itinerary = ({authenticated, user, id}) => {
 						onOpen ={onOpen}
 						onClose= {onClose}/>
 					{
-						<ItineraryMapExperience />
+						<ItineraryMapExperience active_itin = { active_itin }/>
 					}
 				</>
 				: <Auth />

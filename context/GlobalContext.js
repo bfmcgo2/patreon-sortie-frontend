@@ -25,6 +25,7 @@ export const GlobalProvider = (props) => {
 	};
 
 	const jumpToTimestamp = (time) => {
+		console.log("time: ", map, "video_ref: ", video_ref);
 		video_ref.seekTo(time);
 	};
 

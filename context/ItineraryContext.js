@@ -5,31 +5,82 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const CLIENT = publicRuntimeConfig.CLIENT_URL;
 
+import { setBbox } from '../utils/setBbox';
+
 import GlobalContext from './GlobalContext';
 import UserContext from './UserContext';
+import MapContext from './MapContext';
 
 const ItineraryContext = createContext();
 
 export const ItineraryProvider = (props) => {
-	const { jumpToLocation, playing, video_time, jumpToTimestamp, setPlaying } = useContext(GlobalContext);
+	const { jumpToLocation, playing, video_time, video_ref, jumpToTimestamp, setPlaying } = useContext(GlobalContext);
 	const { user } = useContext(UserContext)
+	const { setMapCenter, map_center, map} = useContext(MapContext);
 
 	const [itin, setItin] = useState([]); //set initial itineraries
 	const [itin_name, createItinName] = useState(''); //create itinerary bucket
-	const [active_itin, setActiveItin] = useState({}); //set active itinerary
+	const [active_itin, setActiveItin] = useState(null); //set active itinerary
+	const [active_location, setActiveLocation] = useState(null);//set active location within itinerary
+	const [loading_pins, setLoading] = useState(true); // loading state equals true to open the page
+	const [popup, setPopup] = useState(null);
 
 	useEffect(()=> {
 		if(user) {
 			fetchItineraries();
 		}
-	},[user])
-	console.log(itin)
+	},[user]);
 
-	// useEffect(()=> {
-	// 	if(active_itin) {
-	// 		console.log(active_itin)
-	// 	}
-	// })
+	useEffect(()=>{
+		if(active_location && video_ref) {
+			locationTimestamp(active_location);
+		}
+	},[active_location, video_ref]);
+
+	useEffect(()=>{
+
+		if(!active_itin ) return false;
+
+		if(active_itin.locations.length < 1) {
+			setMapCenter({
+				center: [-99.00997436121042,39.322656708394106],
+				zoom: [3]
+			});
+		}
+
+		if(active_itin.locations.length === 1) {
+			setMapCenter({
+				center: active_itin.locations[0].coordinates,
+				zoom: [10]
+			});
+			setLoading(false);
+		}
+
+		if(active_itin.locations.length > 1){
+			const { bbox_arr, center_point } = setBbox(active_itin)
+			
+			if(map){
+				map.fitBounds(bbox_arr, {
+					padding: 200
+				});
+			}
+			setMapCenter({
+				center: center_point.geometry.coordinates,
+				zoom: [10]
+			});
+			setLoading(false);
+		}
+
+		
+		
+	},[active_itin]);
+
+	// Jump to location and timestamp on click
+	const locationTimestamp = (loc) => {
+		jumpToLocation(loc.coordinates);
+		jumpToTimestamp(loc.timestamp);
+		setPlaying(true);
+	}
 
 	// Get all
 	const fetchItineraries = async() => {
@@ -124,7 +175,6 @@ export const ItineraryProvider = (props) => {
 		reset()
 		alert('Location added!')	
 	}
-
 	return (
 		<ItineraryContext.Provider 
 			value={{ 
@@ -136,7 +186,12 @@ export const ItineraryProvider = (props) => {
 				getOneItinerary,
 				active_itin,
 				setActiveItin,
-				addToItinerary
+				addToItinerary,
+				active_location,
+				setActiveLocation,
+				loading_pins,
+				popup,
+				setPopup
 			}}>
 			{props.children}
 		</ItineraryContext.Provider>
