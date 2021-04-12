@@ -6,6 +6,8 @@ import getConfig from 'next/config';
 import { authCheck } from '../../utils/auth-check.js';
 import { userData } from '../../utils/user-data.js';
 
+import { GeocoderProvider } from '../../context/GeocoderContext';
+
 import Auth from '../../components/Auth';
 import Header from '../../components/shared/Header';
 import Drawer from '../../components/shared/Drawer';
@@ -39,9 +41,11 @@ const Itinerary = ({authenticated, user, id}) => {
 						isOpen ={isOpen}
 						onOpen ={onOpen}
 						onClose= {onClose}/>
+					<GeocoderProvider>
 					{
 						<ItineraryMapExperience active_itin = { active_itin }/>
 					}
+					</GeocoderProvider>
 				</>
 				: <Auth />
 			}

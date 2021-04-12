@@ -40,14 +40,16 @@ export const ItineraryProvider = (props) => {
 
 	useEffect(()=>{
 		setActiveLocation(null);
-		if(!active_itin ) return false;
+		if(!active_itin) {
+			return;
+		}
 
 		if(active_itin.locations.length < 1) {
 			setMapCenter({
 				center: [-99.00997436121042,39.322656708394106],
 				zoom: [3]
 			});
-			setAddToItin(true);
+			setAddToItin(false);
 		}
 
 		if(active_itin.locations.length === 1) {

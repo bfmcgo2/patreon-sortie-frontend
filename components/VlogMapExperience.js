@@ -25,24 +25,11 @@ const VlogMapExperience = ({data}) => {
 			zoom: [8]
 		});	
 		if(map) {
-			
-			
-
 			const all_coords = data.locations.map(loc =>  loc.coordinates);
-
-			const bounds = all_coords.reduce((bounds, coord) => {
-				console.log('bounds: ', bounds, 'coords: ', coord)
-			});
-
-
-			
 			let camera_bounds = map.cameraForBounds(bbox_arr, {
 				padding: 200,
 				offset: [200, 0]
-			});
-
-				
-			
+			});	
 			setMapCenter({
 				center: [camera_bounds.center.lng,camera_bounds.center.lat] ,
 				zoom: [camera_bounds.zoom]
@@ -64,9 +51,6 @@ const VlogMapExperience = ({data}) => {
 				setActivePin(order);
 			}
 		})
-
-		
-		
 	}, [video_time])
 
 	const removeActiveLocations = () => {
