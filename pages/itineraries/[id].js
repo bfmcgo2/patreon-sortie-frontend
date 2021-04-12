@@ -24,7 +24,7 @@ const Itinerary = ({authenticated, user, id}) => {
 	const { setActiveItin, getOneItinerary, active_itin } = useContext(ItineraryContext)
 	useEffect(async()=> {
 		if(user) {
-			setUser(user)
+			setUser(user);
 			const itinerary = await getOneItinerary(id);
 			setActiveItin(itinerary.itinerary);
 		} 

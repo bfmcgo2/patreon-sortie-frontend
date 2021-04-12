@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Button, Container,Alert, AlertIcon, AlertTitle, AlertDescription } from "@chakra-ui/react";
 import { FaPatreon } from 'react-icons/fa';
 
-const AlertMessage = ({title, action, button}) => {
+const AlertMessage = (props) => {
 
 	return (
 		<Container
@@ -22,14 +22,16 @@ const AlertMessage = ({title, action, button}) => {
 				alignItems="center"
 				justifyContent="center"
 				textAlign="center"
-				height="200px"
+				padding="35px"
 				width= "400px"
 			>
 				<AlertIcon boxSize="40px" mr={0} />
 				<AlertTitle mt={4} mb={1} fontSize="lg">
-					{ title }
+					{ props.title }
 				</AlertTitle>
-				{button && 
+
+				<AlertDescription>{props.children}</AlertDescription>
+				{ props.button && 
 					<Button 
 					  colorScheme="gray" 
 					  leftIcon={<FaPatreon color={"rgb(255,66,77)"}/>}
@@ -38,8 +40,8 @@ const AlertMessage = ({title, action, button}) => {
 					      boxShadow:
 					        "0 0 1px 2px rgba(88, 144, 255, .75), 0 1px 1px rgba(0, 0, 0, .15)",
 					    }}
-					  onClick={ action }>
-					    { button }
+					  onClick={ props.action }>
+					    { props.button }
 					  </Button>
 				}
 				

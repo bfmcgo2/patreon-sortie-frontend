@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import { Layer, Feature, Marker, Popup } from "react-mapbox-gl";
-import { useToast } from "@chakra-ui/react"
+import { useToast, Button } from "@chakra-ui/react"
 
 import AlertMessage from './shared/AlertMessage'
 
@@ -18,7 +18,7 @@ import ItineraryVlog from './ItineraryVlog';
 
 const ItineraryMapExperience = ({ active_itin }) => {
 	const { setMapCenter, map_center, map} = useContext(MapContext);
-	const { setActiveLocation, active_location, loading_pins, popup, setPopup } = useContext(ItineraryContext);
+	const { setActiveLocation, active_location, loading_pins, popup, setPopup, add_to_itin, setAddToItin } = useContext(ItineraryContext);
 
 	const toast = useToast();
 
@@ -36,7 +36,11 @@ const ItineraryMapExperience = ({ active_itin }) => {
 		toast.closeAll()
 	}
 
-	console.log(active_location);
+
+	const addCustomPins = () => {
+		setAddToItin(false);
+
+	}
 
 	return (
 		<div className={styles.container}>
@@ -46,12 +50,25 @@ const ItineraryMapExperience = ({ active_itin }) => {
 					zoom= {map_center ? map_center.zoom: null }>
 						{
 							active_location ? <ItineraryVlog active_itin={ active_itin } /> : <div></div>
-						}		
+						}	
+
+						{ add_to_itin &&
+							<AlertMessage 
+								title = "You have no itinerary locations"
+								button="Discover New Locations"
+								action={()=> window.open('https://www.patreon.com/sortie/', '_blank')}>
+								<Button m="2" onClick={addCustomPins}>Drop your own custom pins!</Button>
+							</AlertMessage>
+
+						}	
 
 						<Layer 
 							type="symbol" 
 							id="reg_marker" 
-							layout={{ 'icon-image': 'harbor-15' }}>
+							layout={{ 
+								'icon-image': 'harbor-15',
+								'icon-allow-overlap': true
+							 }}>
 						{ !loading_pins &&
 							active_itin.locations.map((loc,i)=> {
 						  		return(

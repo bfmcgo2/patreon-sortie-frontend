@@ -12,6 +12,10 @@ import {
   DrawerContent,
   DrawerCloseButton,
   Stack,
+  CloseButton,
+  PopoverTrigger,
+  PopoverCloseButton,
+  Popover,
   Box } from "@chakra-ui/react";
 
 
@@ -19,16 +23,20 @@ const { publicRuntimeConfig } = getConfig();
 const CLIENT = publicRuntimeConfig.CLIENT_URL;
 
 import Input from './Input';
-import Popover from './Popover';
+import PopoverAdd from './PopoverAdd';
+import PopoverDelete from './PopoverDelete';
 
 import ItineraryContext from '../../context/ItineraryContext';
 
 const DrawerComponent = ({ isOpen, onClose}) => {
-  const { itin, addItin, createItinName, itin_name } = useContext(ItineraryContext);
-  
+  const { itin, addItin, createItinName, itin_name, deleteItinerary, fetchItineraries } = useContext(ItineraryContext);
+
 
   const btnRef = useRef();
 
+  const removeAndUpdateItineraries = (id) => {
+    deleteItinerary(id);
+  }
 
   return (
     <>
@@ -46,9 +54,22 @@ const DrawerComponent = ({ isOpen, onClose}) => {
                 {itin &&
                   itin.map((loc, i)=> {
                     return(
-                      <Link href={`/itineraries/${loc.id}`} key={i}>
-                         <Button onClick={onClose}>{loc.name}</Button>
+                      <Box 
+                        display="flex"
+                        alignItems="center"
+                        key={i}>
+                      <Link href={`/itineraries/${loc.id}`}>
+                         <Button flex="100%" onClick={onClose}>{loc.name}</Button>
                        </Link>
+                       
+                         
+                       <PopoverDelete
+                        trigger={<CloseButton size="sm" m="5px"/>}
+                        action={()=> removeAndUpdateItineraries(loc.id)}>
+                        Remove this itinerary?
+                       </PopoverDelete>
+                      </Box>
+                      
                       
                     )
                   })
@@ -56,7 +77,7 @@ const DrawerComponent = ({ isOpen, onClose}) => {
               </Stack>
             </DrawerBody>
             <DrawerFooter>
-              <Popover 
+              <PopoverAdd 
                 action={()=> addItin(itin_name)}>
                 <Input 
                   action ={createItinName} 
@@ -65,7 +86,7 @@ const DrawerComponent = ({ isOpen, onClose}) => {
                   light={false} 
                   label={'Create Itinerary'}
                   type={'text'}/>
-              </Popover>
+              </PopoverAdd>
               <Button variant="outline"  onClick={onClose}>
                 Cancel
               </Button>

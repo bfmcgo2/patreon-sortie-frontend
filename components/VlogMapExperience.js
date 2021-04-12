@@ -20,18 +20,37 @@ const VlogMapExperience = ({data}) => {
 
 	useEffect(()=>{
 		const { bbox_arr, center_point } = setBbox(data)
-		
-		if(map){
-			map.fitBounds(bbox_arr, {
-				padding: 200
-			});
-		}
 		setMapCenter({
 			center: center_point.geometry.coordinates,
-			zoom: [10]
-		});
+			zoom: [8]
+		});	
+		if(map) {
+			
+			
+
+			const all_coords = data.locations.map(loc =>  loc.coordinates);
+
+			const bounds = all_coords.reduce((bounds, coord) => {
+				console.log('bounds: ', bounds, 'coords: ', coord)
+			});
+
+
+			
+			let camera_bounds = map.cameraForBounds(bbox_arr, {
+				padding: 200,
+				offset: [200, 0]
+			});
+
+				
+			
+			setMapCenter({
+				center: [camera_bounds.center.lng,camera_bounds.center.lat] ,
+				zoom: [camera_bounds.zoom]
+			});	
+		}
 		
-	},[data]);
+		
+	},[data, map]);
 
 	useEffect(()=> {
 		const timestamps = data.locations.map(loc => loc.timestamp);
@@ -76,7 +95,10 @@ const VlogMapExperience = ({data}) => {
 					<Layer 
 						type="symbol" 
 						id="reg_marker" 
-						layout={{ 'icon-image': 'harbor-15' }}>
+						layout={{ 
+							'icon-image': 'harbor-15',
+							'icon-allow-overlap': true 
+						}}>
 					{ removeActiveLocations().map((loc,i)=> {
 					  		return(
 				  			    <Feature 

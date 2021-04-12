@@ -17,7 +17,7 @@ import LocationForm from './LocationForm';
 
 const VlogUpload = () => {
 	// Context data/actions
-	const { edit_location, editLocation, location, uploadYouTube, data, new_marker } = useContext(UploadContext);
+	const { edit_location, editLocation, location, addVlog, data, new_marker } = useContext(UploadContext);
 	const { jumpToLocation, video_time, setPlaying, playing } = useContext(GlobalContext);
 	const { map_center} = useContext(MapContext);
 
@@ -41,7 +41,7 @@ const VlogUpload = () => {
 				top="10px"
 				zIndex="2"
 				color="green"
-				onClick={uploadYouTube}>SUBMIT</Button>
+				onClick={addVlog}>SUBMIT</Button>
 			<div className={styles.vlog__builder}>		
 				<Upload 
 					clear = { clear }/>

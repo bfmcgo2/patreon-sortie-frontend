@@ -1,6 +1,10 @@
 import { createContext, useState, useEffect } from 'react';
 import _ from 'underscore';
 
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const CLIENT = publicRuntimeConfig.CLIENT_URL;
+
 const UploadContext = createContext();
 
 
@@ -33,13 +37,12 @@ export const UploadProvider = (props) => {
 		updateSearch(locations.features);
 	}
 	const throttledGeocoder = _.debounce(searchMapboxGeocoder, 400);
-	/**
-	*Input sets YouTube url for React Player
-	*
-	*/
-	const uploadYouTube = async (ev,inp) => {
+
+	// Add
+	const addVlog = async (ev) => {
+		console.log(CLIENT)
 		ev.preventDefault();
-		const response = await fetch('http://localhost:1337/vlogs', {
+		const response = await fetch(`${CLIENT}/api/vlog/add_vlog`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
@@ -49,8 +52,8 @@ export const UploadProvider = (props) => {
 				locations: data.locations
 			})
 		})
-
 		const json = await response.json();
+		console.log(json)
 	}	
 
 	
@@ -69,7 +72,7 @@ export const UploadProvider = (props) => {
 
 // value={{ user, loginUser, logoutUser, getToken }}
 	return (
-		<UploadContext.Provider value={{ edit_location, editLocation, location, setLocation, new_marker, createNewMarker, url, updateURL, throttledGeocoder, results, uploadYouTube, data, updateData }}>
+		<UploadContext.Provider value={{ edit_location, editLocation, location, setLocation, new_marker, createNewMarker, url, updateURL, throttledGeocoder, results, addVlog, data, updateData }}>
 			{props.children}
 		</UploadContext.Provider>
 	)

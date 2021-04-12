@@ -24,6 +24,7 @@ export const ItineraryProvider = (props) => {
 	const [active_location, setActiveLocation] = useState(null);//set active location within itinerary
 	const [loading_pins, setLoading] = useState(true); // loading state equals true to open the page
 	const [popup, setPopup] = useState(null);
+	const [add_to_itin, setAddToItin] = useState(null)
 
 	useEffect(()=> {
 		if(user) {
@@ -38,7 +39,7 @@ export const ItineraryProvider = (props) => {
 	},[active_location, video_ref]);
 
 	useEffect(()=>{
-
+		setActiveLocation(null);
 		if(!active_itin ) return false;
 
 		if(active_itin.locations.length < 1) {
@@ -46,6 +47,7 @@ export const ItineraryProvider = (props) => {
 				center: [-99.00997436121042,39.322656708394106],
 				zoom: [3]
 			});
+			setAddToItin(true);
 		}
 
 		if(active_itin.locations.length === 1) {
@@ -123,6 +125,20 @@ export const ItineraryProvider = (props) => {
 		})
 	}
 
+	// Delete
+	const deleteItinerary = async(id) => {
+		const add_itin = await fetch(`${CLIENT}/api/itinerary/delete_itinerary`, {
+		  method: "POST",
+		  headers: {
+		    "Content-Type": "application/json"
+		  },
+		  body: JSON.stringify({
+		    id
+		  })
+		})
+		fetchItineraries();
+	}
+
 	// Get One Itinerary
 	const getOneItinerary =async(id) => {
 		const get_itin = await fetch(`${CLIENT}/api/itinerary/get_itinerary`, {
@@ -191,7 +207,10 @@ export const ItineraryProvider = (props) => {
 				setActiveLocation,
 				loading_pins,
 				popup,
-				setPopup
+				setPopup,
+				add_to_itin,
+				setAddToItin,
+				deleteItinerary
 			}}>
 			{props.children}
 		</ItineraryContext.Provider>

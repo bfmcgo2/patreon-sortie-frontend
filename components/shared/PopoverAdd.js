@@ -9,12 +9,13 @@ import {
   PopoverHeader,
   PopoverBody,
   useDisclosure,
+  Text,
   Box } from "@chakra-ui/react";
 
 import Input from './Input';
 
 
-const PopoverComponent = (props) => {
+const PopoverAdd = (props) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
   const initRef =useRef()
 
@@ -37,7 +38,9 @@ const PopoverComponent = (props) => {
               flexDirection="column"
               justifyContent="center">
               <Box padding="10px 0">
-                {props.children}
+                <Text>
+                  {props.children}
+                </Text>
               </Box>
               
               <Button 
@@ -56,4 +59,4 @@ const PopoverComponent = (props) => {
   )
 }
 
-export default PopoverComponent;
+export default PopoverAdd;
