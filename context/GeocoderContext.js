@@ -14,7 +14,7 @@ export const GeocoderProvider = (props) => {
 
 	const [new_marker, createNewMarker] = useState(null); //Adds marker on location click
 	const [results, updateSearch] = useState(); //Geocode results
-	console.log(new_marker)
+
 	/**
 	*Input fetches address
 	*/

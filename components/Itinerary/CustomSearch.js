@@ -9,13 +9,14 @@ import MapContext from '../../context/MapContext';
 import GlobalContext from '../../context/GlobalContext';
 
 
-const CustomSearch = ({ clear }) => {
+const CustomSearch = ({ action }) => {
 	const { results, throttledGeocoder, createNewMarker, } = useContext(GeocoderContext);
 	const { jumpToLocation, setPlaying, video_time } = useContext(GlobalContext);
 	const { setMapCenter} = useContext(MapContext);
 
 	// Add Location to map
 	const itemClick = (coord, loc) => {
+		console.log(coord, loc)
 		createNewMarker({
 			name: loc.text,
 			coordinates: coord
@@ -25,11 +26,7 @@ const CustomSearch = ({ clear }) => {
 			zoom: [15]
 		});
 		jumpToLocation(coord);
-		// setLocation({
-		// 	id: Date.now(),
-		// 	name: loc.text,
-		// 	coordinates: coord
-		// })
+		action(loc);
 	}
 
 	return (
@@ -43,8 +40,7 @@ const CustomSearch = ({ clear }) => {
 					active={false} 
 					light={false} 
 					label={'Add To Itinerary'}
-					type={'text'}
-					clear={clear}/>
+					type={'text'}/>
 			</Box>
 			<Box
 				overflowY= "scroll"

@@ -13,6 +13,7 @@ import MapContext from '../context/MapContext';
 import GeocoderContext from '../context/GeocoderContext';
 
 import Map from './shared/Map';
+import Input from './shared/Input';
 
 import CustomSearch from './Itinerary/CustomSearch';
 
@@ -21,8 +22,8 @@ import ItineraryVlog from './ItineraryVlog';
 
 const ItineraryMapExperience = ({ active_itin }) => {
 	const { setMapCenter, map_center, map} = useContext(MapContext);
-	const { setActiveLocation, active_location, loading_pins, popup, setPopup, add_to_itin, setAddToItin } = useContext(ItineraryContext);
-	const { new_marker } = useContext(GeocoderContext);
+	const { setActiveLocation, active_location, loading_pins, popup, setPopup, add_to_itin, setAddToItin, updateItinerary } = useContext(ItineraryContext);
+	const { new_marker, createNewMarker } = useContext(GeocoderContext);
 	const toast = useToast();
 
 	const locationHover = (loc) => {
@@ -39,13 +40,61 @@ const ItineraryMapExperience = ({ active_itin }) => {
 		toast.closeAll()
 	}
 
-
-	const addCustomPins = () => {
-		setAddToItin(true);
-
+	const addToItinPins = () => {
+		console.log(new_marker)
+		updateItinerary( new_marker, active_itin)
+		toast.closeAll()
 	}
-	console.log(active_itin, add_to_itin)
 
+	const addCustomPins = (loc) => {
+		toast.closeAll()
+		createNewMarker({
+			name: loc.text,
+			coordinates: loc.geometry.coordinates,
+			type: "custom"
+		})
+	}
+
+	const changeName = (inp) => {
+		if(inp !== new_marker.name) {
+			createNewMarker({
+				...new_marker,
+				name: inp
+			})
+		}
+		
+	}
+
+	
+	useEffect(()=> {
+		if(new_marker) {
+
+			toast({
+				status: "success",
+				duration: null,
+				isClosable: true,
+				render: () => (
+					<Box color="white" borderRadius="5px" p={4} 
+						bg="blue.500" alignItems="center" 
+						justifyContent="center" display="flex" flexDirection="column">
+						<Input 
+							locked={true} 
+							active={true} 
+							light={true} 
+							label={'Create custom pin (ie: Hotel, Airbnb, etc)'}
+							set_value= {new_marker ? new_marker.name : ''}
+							type={'text'}/>
+						<Button colorScheme="white" 
+								m={2} 
+								variant="outline"
+								onClick={()=> addToItinPins()}>
+							Add Pin
+						</Button>
+					 </Box>
+					)
+			})
+		}
+	}, [new_marker])
 
 	if(!active_itin) return <div></div>
 	return (
@@ -63,7 +112,7 @@ const ItineraryMapExperience = ({ active_itin }) => {
 								title = "You have no itinerary locations"
 								button="Discover New Locations"
 								action={()=> window.open('https://www.patreon.com/sortie/', '_blank')}>
-								<Button m="2" onClick={addCustomPins}>Drop your own custom pins!</Button>
+								<Button m="2" onClick={()=>setAddToItin(true)}>Drop your own custom pins!</Button>
 							</AlertMessage>: <div></div>
 
 						}
@@ -74,7 +123,8 @@ const ItineraryMapExperience = ({ active_itin }) => {
 								top="20%"
 								width="30%"
 								bg="rgb(236,234,238)">
-								<CustomSearch />
+								<CustomSearch
+								 action={addCustomPins}/>
 							</Box>
 							: <div></div>
 						}
@@ -84,18 +134,15 @@ const ItineraryMapExperience = ({ active_itin }) => {
 						  'circle-stroke-color': '#fff',
 						  'circle-stroke-opacity': 1
 						 }}>
-						{ new_marker && 
-							
+						{ new_marker && 	
 				   			    <Feature 
-				   			    	coordinates={new_marker.coordinates}
-				   			    	
+				   			    	coordinates={new_marker.coordinates} 	
 				   			    	onMouseEnter={()=> {
 				   			    		map.getCanvas().style.cursor = 'pointer';
 				   			    	}}
 				   			    	onMouseLeave={()=> {
 				   			    		map.getCanvas().style.cursor = 'grab';
 				   			    	}}/>
-							
 						}
 						</Layer>
 

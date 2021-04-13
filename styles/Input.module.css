@@ -3,7 +3,7 @@
   height: 56px;
   border-radius: 4px;
   position: relative;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 1);
   transition: 0.3s background-color ease-in-out, 0.3s box-shadow ease-in-out;
 }
 
@@ -53,48 +53,48 @@
 
 /*white*/
 .field .input_light::-webkit-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
 }
 .field .input_light::-moz-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
 }
 .field .input_light:-ms-input-placeholder {
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 1);
 }
 
 
 /*black*/
 .field .input_dark::-webkit-input-placeholder {
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0,0,0, 1);
 }
 .field .input_dark::-moz-placeholder {
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0,0,0, 1);
 }
 .field .input_dark:-ms-input-placeholder {
-  color: rgba(0,0,0, 0.8);
+  color: rgba(0,0,0, 1);
 }
 
 /*gray*/
 .field.locked .input_dark::-webkit-input-placeholder {
-  color: rgba(169,169,169, 0.8);
+  color: rgba(169,169,169, 1);
 }
 .field.locked .input_dark:-moz-placeholder{
-  color: rgba(169,169,169, 0.8);
+  color: rgba(169,169,169, 1);
 }
 
 .field.locked .input_dark:-ms-input-placeholder {
-  color: rgba(169,169,169, 0.8);
+  color: rgba(169,169,169, 1);
 }
 
 .field.locked .input_light::-webkit-input-placeholder {
-  color: rgba(169,169,169, 0.8);
+  color: rgba(169,169,169, 1);
 }
 .field.locked .input_light:-moz-placeholder{
-  color: rgba(169,169,169, 0.8);
+  color: rgba(169,169,169, 1);
 }
 
 .field.locked .input_light:-ms-input-placeholder {
-  color: rgba(169,169,169, 0.8);
+  color: rgba(169,169,169, 1);
 }
 
 

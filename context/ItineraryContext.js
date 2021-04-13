@@ -115,7 +115,7 @@ export const ItineraryProvider = (props) => {
 
 	// Update
 	const updateItinerary = async(loc, itin) => {
-		const add_itin = await fetch(`${CLIENT}/api/itinerary/update_itinerary`, {
+		const update_itin = await fetch(`${CLIENT}/api/itinerary/update_itinerary`, {
 		  method: "POST",
 		  headers: {
 		    "Content-Type": "application/json"
@@ -129,7 +129,7 @@ export const ItineraryProvider = (props) => {
 
 	// Delete
 	const deleteItinerary = async(id) => {
-		const add_itin = await fetch(`${CLIENT}/api/itinerary/delete_itinerary`, {
+		const delete_itin = await fetch(`${CLIENT}/api/itinerary/delete_itinerary`, {
 		  method: "POST",
 		  headers: {
 		    "Content-Type": "application/json"
@@ -187,9 +187,9 @@ export const ItineraryProvider = (props) => {
 
 		// API call for specific itinerary
 		const itinerary = await getOneItinerary(findItin[0].id);
-
+		console.log("REFORMAT: ", reformat_loc, "itinerary: ", itinerary.itinerary)
 		// Update itinerary and reset form
-		updateItinerary(reformat_loc, itinerary)
+		updateItinerary(reformat_loc, itinerary.itinerary)
 		reset()
 		alert('Location added!')	
 	}
@@ -202,6 +202,7 @@ export const ItineraryProvider = (props) => {
 				createItinName, 
 				itin, 
 				getOneItinerary,
+				updateItinerary,
 				active_itin,
 				setActiveItin,
 				addToItinerary,

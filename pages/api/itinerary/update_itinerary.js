@@ -7,15 +7,11 @@ export default async(req, res) => {
 	// const { itin_name } = req.body;
 	const cookies = cookie.parse(req.headers.cookie || '')
 
-	let {itin, loc} =req.body;
+	const {itin, loc} =req.body;
+	console.log("ITINERARY: ", itin,"LOCATION: ", loc)
+	const add_location = [loc, ...itin.locations];
 
-
-	console.log("CLONE: ", itin.itinerary.locations);
-
-	let add_location = [loc, ...itin.itinerary.locations]
-	console.log(add_location);
-
-	const response = await fetch(`${server}/itineraries/${itin.itinerary.id}`, {
+	const response = await fetch(`${server}/itineraries/${itin.id}`, {
 	  method: 'PUT',
 	  headers: {
 	    'Content-Type': 'application/json',
