@@ -17,7 +17,7 @@ const MapComponent = (props) => {
 	return(
 		<div className={styles.map_container}>
 			<Map
-			  style="mapbox://styles/mapbox/streets-v9"
+			  style="mapbox://styles/bfmcgo2/cje1yog8zc5xi2rq99geum951"
 			  onClick={(e, i)=> console.log(i)}
 			  className={styles.map}
 			  center={props.center ? props.center : [-96.85905171135028,39.75522481252764]}

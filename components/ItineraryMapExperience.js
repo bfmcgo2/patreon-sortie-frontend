@@ -99,7 +99,7 @@ const ItineraryMapExperience = ({ active_itin }) => {
 	if(!active_itin) return <div></div>
 	return (
 		<div className={styles.container}>
-			{active_itin && 
+			{ active_itin && 
 				<Map
 					center= {map_center ? map_center.center : null}
 					zoom= {map_center ? map_center.zoom: null }>
@@ -129,7 +129,7 @@ const ItineraryMapExperience = ({ active_itin }) => {
 							: <div></div>
 						}
 						<Layer type="circle" id="active_marker" paint={{
-						  'circle-color': "#ff5200",
+						  'circle-color': "#0d98ba",
 						  'circle-stroke-width': 1,
 						  'circle-stroke-color': '#fff',
 						  'circle-stroke-opacity': 1
@@ -150,8 +150,9 @@ const ItineraryMapExperience = ({ active_itin }) => {
 							type="symbol" 
 							id="reg_marker" 
 							layout={{ 
-								'icon-image': 'harbor-15',
-								'icon-allow-overlap': true
+								'icon-image': 'vlog-pin',
+								'icon-allow-overlap': true,
+								'icon-size' : 2
 							 }}>
 						{ !loading_pins &&
 							active_itin.locations.map((loc,i)=> {

@@ -31,9 +31,9 @@ export const VlogProvider = (props) => {
 	}
 
 	const clickLocation = (url,loc) => {
+		console.log("url: ", url, "loc: ", loc)
 		let add_url = {...loc, url};
-		console.log(add_url);
-		setPlaying(false);
+		// setPlaying(false);
 		setActivePin(add_url);
 		setPlaying(true);
 	}

@@ -10,7 +10,7 @@ const GlobalContext = createContext();
 
 
 export const GlobalProvider = (props) => {
-	const { video_time, video_ref, setPlaying, playing } = useContext(VideoContext);
+	const { video_time, video_ref, setPlaying, playing, buffered, setBuffered } = useContext(VideoContext);
 	const { map } = useContext(MapContext);
 	const { user, setUser } = useContext(UserContext);
 
@@ -25,13 +25,12 @@ export const GlobalProvider = (props) => {
 	};
 
 	const jumpToTimestamp = (time) => {
-		console.log("time: ", map, "video_ref: ", video_ref);
 		video_ref.seekTo(time);
 	};
 
 
 	return (
-		<GlobalContext.Provider value={{ map, jumpToLocation, jumpToTimestamp, video_time, video_ref, setPlaying, playing }}>
+		<GlobalContext.Provider value={{ map, jumpToLocation, jumpToTimestamp, video_time, video_ref, setPlaying, playing, buffered, setBuffered }}>
 			{props.children}
 		</GlobalContext.Provider>
 	)

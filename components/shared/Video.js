@@ -6,7 +6,7 @@ import VideoContext from '../../context/VideoContext';
 import styles from '../../styles/Video.module.css';
 
 const Video = ({url}) => {
-	const { setVideoRef, setVideoTime, playing, setPlaying } = useContext(VideoContext);
+	const { setVideoRef, setVideoTime, playing, setPlaying, setBuffered } = useContext(VideoContext);
 
 	return (
 		<AspectRatio ratio={16/9} minW="100%">
@@ -23,7 +23,8 @@ const Video = ({url}) => {
 		          onPause={()=> setPlaying(false)}
 		          onProgress={(e)=> {
 		          	setVideoTime(e.playedSeconds)
-		          }}/>
+		          }}
+		          onBuffer={(e)=> setBuffered(true)}/>
 		    </div>	
 		</AspectRatio>
 	)

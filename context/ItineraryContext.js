@@ -14,7 +14,7 @@ import MapContext from './MapContext';
 const ItineraryContext = createContext();
 
 export const ItineraryProvider = (props) => {
-	const { jumpToLocation, playing, video_time, video_ref, jumpToTimestamp, setPlaying } = useContext(GlobalContext);
+	const { jumpToLocation, playing, video_time, video_ref, jumpToTimestamp, setPlaying, buffered, setBuffered } = useContext(GlobalContext);
 	const { user } = useContext(UserContext)
 	const { setMapCenter, map_center, map} = useContext(MapContext);
 
@@ -24,7 +24,9 @@ export const ItineraryProvider = (props) => {
 	const [active_location, setActiveLocation] = useState(null);//set active location within itinerary
 	const [loading_pins, setLoading] = useState(true); // loading state equals true to open the page
 	const [popup, setPopup] = useState(null);
-	const [add_to_itin, setAddToItin] = useState(null)
+	const [add_to_itin, setAddToItin] = useState(null);
+
+
 
 	useEffect(()=> {
 		if(user) {
@@ -35,11 +37,32 @@ export const ItineraryProvider = (props) => {
 	useEffect(()=>{
 		if(active_location && video_ref) {
 			locationTimestamp(active_location);
+			
 		}
-	},[active_location, video_ref]);
+	},[active_location, video_ref, buffered]);
+
+	// useEffect(()=>{
+	// 	const { bbox_arr, center_point } = setBbox(data)
+	// 	setMapCenter({
+	// 		center: center_point.geometry.coordinates,
+	// 		zoom: [8]
+	// 	});	
+	// 	if(map) {
+	// 		const all_coords = data.locations.map(loc =>  loc.coordinates);
+	// 		let camera_bounds = map.cameraForBounds(bbox_arr, {
+	// 			padding: 200,
+	// 			offset: [200, 0]
+	// 		});	
+	// 		setMapCenter({
+	// 			center: [camera_bounds.center.lng,camera_bounds.center.lat] ,
+	// 			zoom: [camera_bounds.zoom]
+	// 		});	
+	// 	}
+		
+		
+	// },[data, map]);
 
 	useEffect(()=>{
-		setActiveLocation(null);
 		if(!active_itin) {
 			return;
 		}
@@ -62,28 +85,37 @@ export const ItineraryProvider = (props) => {
 
 		if(active_itin.locations.length > 1){
 			const { bbox_arr, center_point } = setBbox(active_itin)
-			
-			if(map){
-				map.fitBounds(bbox_arr, {
-					padding: 200
-				});
-			}
 			setMapCenter({
 				center: center_point.geometry.coordinates,
-				zoom: [10]
+				zoom: [5]
 			});
+			if(map){
+				const all_coords = active_itin.locations.map(loc =>  loc.coordinates);
+				console.log("HEY MAP: ", map)
+				const camera_bounds = map.cameraForBounds(bbox_arr, {
+					padding: 200,
+					offset: [0, 0]
+				});
+				setMapCenter({
+					center: [camera_bounds.center.lng,camera_bounds.center.lat] ,
+					zoom: [camera_bounds.zoom]
+				});	
+			}
+			
 			setLoading(false);
 		}
 
 		
 		
-	},[active_itin]);
+	},[active_itin, map]);
 
 	// Jump to location and timestamp on click
 	const locationTimestamp = (loc) => {
+		setBuffered(false);
 		jumpToLocation(loc.coordinates);
-		jumpToTimestamp(loc.timestamp);
 		setPlaying(true);
+		jumpToTimestamp(loc.timestamp);
+		
 	}
 
 	// Get all
@@ -187,7 +219,6 @@ export const ItineraryProvider = (props) => {
 
 		// API call for specific itinerary
 		const itinerary = await getOneItinerary(findItin[0].id);
-		console.log("REFORMAT: ", reformat_loc, "itinerary: ", itinerary.itinerary)
 		// Update itinerary and reset form
 		updateItinerary(reformat_loc, itinerary.itinerary)
 		reset()

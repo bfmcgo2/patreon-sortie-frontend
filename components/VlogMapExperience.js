@@ -61,7 +61,6 @@ const VlogMapExperience = ({data}) => {
 		return order.filter(loc => loc.id !== active_pin.id);
 	}
 
-	let activePin = 'http://www.myiconfinder.com/uploads/iconsets/48-48-805acbe9bb30960ac19dded197fbf2e8.png'
 	return (
 		<div className={styles.container}>
 			<Map
@@ -80,21 +79,23 @@ const VlogMapExperience = ({data}) => {
 						type="symbol" 
 						id="reg_marker" 
 						layout={{ 
-							'icon-image': 'harbor-15',
-							'icon-allow-overlap': true 
-						}}>
+							'icon-image': 'vlog-pin',
+							'icon-allow-overlap': true,
+							'icon-size' : 2
+						}}
+						>
 					{ removeActiveLocations().map((loc,i)=> {
 					  		return(
 				  			    <Feature 
 					  			    key = { i }
 				  			    	coordinates={loc.coordinates}
-				  			    	onClick={()=> clickLocation(data.url,loc)}/>
+				  			    	onClick={()=> clickLocation(data.url, loc)}/>
 					  		)
 					  	})
 					}
 				  	</Layer>
 				  	<Layer type="circle" id="active_marker" paint={{
-				  	  'circle-color': "#ff5200",
+				  	  'circle-color': "#CB2300",
 				  	  'circle-stroke-width': 1,
 				  	  'circle-stroke-color': '#fff',
 				  	  'circle-stroke-opacity': 1

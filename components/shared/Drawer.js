@@ -29,13 +29,18 @@ import PopoverDelete from './PopoverDelete';
 import ItineraryContext from '../../context/ItineraryContext';
 
 const DrawerComponent = ({ isOpen, onClose}) => {
-  const { itin, addItin, createItinName, itin_name, deleteItinerary, fetchItineraries } = useContext(ItineraryContext);
+  const { itin, addItin, createItinName, itin_name, deleteItinerary, fetchItineraries, setActiveLocation } = useContext(ItineraryContext);
 
 
   const btnRef = useRef();
 
   const removeAndUpdateItineraries = (id) => {
     deleteItinerary(id);
+  }
+
+  const changeItinerary = () => {
+    setActiveLocation(null);
+    onClose()
   }
 
   return (
@@ -59,7 +64,7 @@ const DrawerComponent = ({ isOpen, onClose}) => {
                         alignItems="center"
                         key={i}>
                       <Link href={`/itineraries/${loc.id}`}>
-                         <Button flex="100%" onClick={onClose}>{loc.name}</Button>
+                         <Button flex="100%" onClick={changeItinerary}>{loc.name}</Button>
                        </Link>
                        
                          

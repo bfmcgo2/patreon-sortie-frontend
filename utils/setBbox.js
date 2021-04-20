@@ -8,8 +8,6 @@ export const setBbox = (data) => {
 	const center_point = turf.center(line);
 	const bbox_arr = [[bbox[0], bbox[1]], [bbox[2], bbox[3]]];
 
-	console.log(bbox_arr);
-
 	return {
 		center_point, 
 		bbox_arr
